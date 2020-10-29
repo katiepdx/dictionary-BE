@@ -5,9 +5,9 @@ const app = require('../lib/app');
 const Word = require('../lib/models/word-model')
 
 describe('dictionary-BE routes', () => {
-  beforeEach(() => {
-    return pool.query(fs.readFileSync('./sql/setup.sql', 'utf-8'))
-  });
+  // beforeEach(() => {
+  //   return pool.query(fs.readFileSync('./sql/setup.sql', 'utf-8'))
+  // });
 
   it('should add a word to the database table using POST', async () => {
     return await request(app)
