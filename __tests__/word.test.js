@@ -32,4 +32,52 @@ describe('dictionary-BE routes', () => {
         })
       })
   })
+
+  it('should get all words in database using GET', async () => {
+    await Promise.all([
+      Word.createWord(
+        ({
+          word: 'Word1',
+          wordLanguage: 'English',
+          wordTranslation: 'Word1',
+          wordDefinition: 'word1 definition.',
+          exampleSentence: 'This is word1！',
+          notes: 'I learned a new word!'
+        }),
+        Word.createWord({
+          word: 'Word2',
+          wordLanguage: 'English',
+          wordTranslation: 'Word2',
+          wordDefinition: 'word2 definition.',
+          exampleSentence: 'This is word2！',
+          notes: 'I learned a new word!'
+        })
+      )
+    ])
+
+    // GET request to endpoint
+    await request(app)
+      .get('/api/v1/words')
+      .then(res => {
+        expect(res.body).toEqual(expect.arrayContaining([
+          {
+            id: expect.any(String),
+            word: 'Word1',
+            wordLanguage: 'English',
+            wordTranslation: 'Word1',
+            wordDefinition: 'word1 definition.',
+            exampleSentence: 'This is word1！',
+            notes: 'I learned a new word!'
+          }, {
+            id: expect.any(String),
+            word: 'Word2',
+            wordLanguage: 'English',
+            wordTranslation: 'Word2',
+            wordDefinition: 'word2 definition.',
+            exampleSentence: 'This is word2！',
+            notes: 'I learned a new word!'
+          }
+        ]))
+      })
+  })
 });
