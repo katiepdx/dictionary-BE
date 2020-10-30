@@ -1,13 +1,10 @@
-const fs = require('fs');
-const pool = require('../lib/utils/pool');
+// data helps for seed
+require('../lib/data/data-helpers')
 const request = require('supertest');
 const app = require('../lib/app');
 const Word = require('../lib/models/word-model')
 
 describe('dictionary-BE routes', () => {
-  beforeEach(() => {
-    return pool.query(fs.readFileSync('./sql/setup.sql', 'utf-8'))
-  });
 
   it('should add a word to the database table using POST', async () => {
     return await request(app)
@@ -34,50 +31,19 @@ describe('dictionary-BE routes', () => {
   })
 
   it('should get all words in database using GET', async () => {
-    await Promise.all([
-      Word.createWord(
-        ({
-          word: 'Word1',
-          wordLanguage: 'English',
-          wordTranslation: 'Word1',
-          wordDefinition: 'word1 definition.',
-          exampleSentence: 'This is word1！',
-          notes: 'I learned a new word!'
-        }),
-        Word.createWord({
-          word: 'Word2',
-          wordLanguage: 'English',
-          wordTranslation: 'Word2',
-          wordDefinition: 'word2 definition.',
-          exampleSentence: 'This is word2！',
-          notes: 'I learned a new word!'
-        })
-      )
-    ])
-
     // GET request to endpoint
     await request(app)
       .get('/api/v1/words')
       .then(res => {
-        expect(res.body).toEqual(expect.arrayContaining([
-          {
-            id: expect.any(String),
-            word: 'Word1',
-            wordLanguage: 'English',
-            wordTranslation: 'Word1',
-            wordDefinition: 'word1 definition.',
-            exampleSentence: 'This is word1！',
-            notes: 'I learned a new word!'
-          }, {
-            id: expect.any(String),
-            word: 'Word2',
-            wordLanguage: 'English',
-            wordTranslation: 'Word2',
-            wordDefinition: 'word2 definition.',
-            exampleSentence: 'This is word2！',
-            notes: 'I learned a new word!'
-          }
-        ]))
+        expect(res.body).toEqual(expect.arrayContaining([{
+          id: expect.any(String),
+          word: expect.any(String),
+          wordLanguage: expect.any(String),
+          wordTranslation: expect.any(String),
+          wordDefinition: expect.any(String),
+          exampleSentence: expect.any(String),
+          notes: expect.any(String)
+        }]))
       })
   })
 });
