@@ -46,4 +46,21 @@ describe('dictionary-BE routes', () => {
         }]))
       })
   })
+
+  it('should get a word by id from the database using GET', async () => {
+    // GET by id request to endpoint
+    await request(app)
+      .get('/api/v1/words/1')
+      .then(res => {
+        expect(res.body).toEqual({
+          id: '1',
+          word: expect.any(String),
+          wordLanguage: expect.any(String),
+          wordTranslation: expect.any(String),
+          wordDefinition: expect.any(String),
+          exampleSentence: expect.any(String),
+          notes: expect.any(String)
+        })
+      })
+  })
 });
