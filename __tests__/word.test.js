@@ -63,4 +63,28 @@ describe('dictionary-BE routes', () => {
         })
       })
   })
+
+  it('should update a word by id from the database using PUT', async () => {
+    await request(app)
+      .put('/api/v1/words/1')
+      .send({
+          word: 'UPDATED WORD 1',
+          wordLanguage: 'UPDATED WORD 1',
+          wordTranslation: 'UPDATED WORD 1',
+          wordDefinition: 'UPDATED WORD 1',
+          exampleSentence: 'UPDATED WORD 1',
+          notes: 'UPDATED WORD 1'
+        })
+      .then(res => {
+        expect(res.body).toEqual({
+          id: '1',
+          word: 'UPDATED WORD 1',
+          wordLanguage: 'UPDATED WORD 1',
+          wordTranslation: 'UPDATED WORD 1',
+          wordDefinition: 'UPDATED WORD 1',
+          exampleSentence: 'UPDATED WORD 1',
+          notes: 'UPDATED WORD 1'
+        })
+      })
+  })
 });
