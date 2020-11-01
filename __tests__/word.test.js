@@ -68,13 +68,13 @@ describe('dictionary-BE routes', () => {
     await request(app)
       .put('/api/v1/words/1')
       .send({
-          word: 'UPDATED WORD 1',
-          wordLanguage: 'UPDATED WORD 1',
-          wordTranslation: 'UPDATED WORD 1',
-          wordDefinition: 'UPDATED WORD 1',
-          exampleSentence: 'UPDATED WORD 1',
-          notes: 'UPDATED WORD 1'
-        })
+        word: 'UPDATED WORD 1',
+        wordLanguage: 'UPDATED WORD 1',
+        wordTranslation: 'UPDATED WORD 1',
+        wordDefinition: 'UPDATED WORD 1',
+        exampleSentence: 'UPDATED WORD 1',
+        notes: 'UPDATED WORD 1'
+      })
       .then(res => {
         expect(res.body).toEqual({
           id: '1',
@@ -84,6 +84,22 @@ describe('dictionary-BE routes', () => {
           wordDefinition: 'UPDATED WORD 1',
           exampleSentence: 'UPDATED WORD 1',
           notes: 'UPDATED WORD 1'
+        })
+      })
+  })
+
+  it('should delete a word by id from the database using DELETE', async () => {
+    await request(app)
+      .delete('/api/v1/words/1')
+      .then(res => {
+        expect(res.body).toEqual({
+          id: '1',
+          word: expect.any(String),
+          wordLanguage: expect.any(String),
+          wordTranslation: expect.any(String),
+          wordDefinition: expect.any(String),
+          exampleSentence: expect.any(String),
+          notes: expect.any(String)
         })
       })
   })
